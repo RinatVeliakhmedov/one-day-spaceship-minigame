@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://d066jse6jlvwr"]
+
+[ext_resource type="Script" uid="uid://rlco1lneyb8l" path="res://projectile.gd" id="1_a85iw"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_akgne"]
+
+[node name="Projectile" type="Area2D"]
+collision_layer = 4
+collision_mask = 8
+script = ExtResource("1_a85iw")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+rect = Rect2(-16, -8, 32, 16)
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color(0.6313726, 0.35686275, 0.45490196, 1)
+antialiased = true
+polygon = PackedVector2Array(16, 0, 8, 8, -16, 8, -16, -8, 8, -8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_akgne")
+
+[connection signal="body_entered" from="." to="." method="_on_enemy_hit"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="queue_free"]
